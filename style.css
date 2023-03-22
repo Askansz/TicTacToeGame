@@ -28,16 +28,24 @@
 
 .x {
     color: #0047ab;
+    font-size: 3.5em;
     background-color: #fff;
     border-radius: 50%;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .o {
     color: #ff2e2e;
+    font-size: 3.5em;
     background-color: #fff;
     border-radius: 50%;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
