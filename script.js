@@ -1,56 +1,73 @@
-const squares = document.querySelectorAll('.square');
-let currentPlayer = 'X';
+// Initialize variables
+let currentPlayer = "X";
+let gameStatus = "";
+let moveCount = 0;
 
-squares.forEach(square => {
-    square.addEventListener('click', handleClick);
+// Get all the cells on the game board
+const cells = document.querySelectorAll(".cell");
+
+// Loop through all the cells and add a click event listener
+cells.forEach(cell => {
+  cell.addEventListener("click", cellClicked);
 });
 
-function handleClick(e) {
-    const square = e.target;
-    if (square.textContent !== '') return;
-    square.classList.add(currentPlayer.toLowerCase());
-    square.textContent = currentPlayer;
-    if (checkForWin()) {
-        alert(`${currentPlayer} wins!`);
-        resetGame();
-        return;
+// Function to handle cell click events
+function cellClicked(event) {
+  const cell = event.target;
+  if (cell.textContent === "" && gameStatus === "") {
+    cell.textContent = currentPlayer;
+    moveCount++;
+    checkGameStatus();
+    togglePlayer();
+  }
+}
+
+// Function to toggle the current player
+function togglePlayer() {
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+}
+
+// Function to check the game status after each move
+function checkGameStatus() {
+  // Get all the winning combinations
+  const winningCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+
+  // Check if any of the winning combinations are complete
+  for (let i = 0; i < winningCombinations.length; i++) {
+    const [a, b, c] = winningCombinations[i];
+    const cell1 = cells[a];
+    const cell2 = cells[b];
+    const cell3 = cells[c];
+    if (
+      cell1.textContent === currentPlayer &&
+      cell2.textContent === currentPlayer &&
+      cell3.textContent === currentPlayer
+    ) {
+      gameStatus = `${currentPlayer} won!`;
+      updateGameStatus();
+      return;
     }
-    if (checkForTie()) {
-        alert('Tie game!');
-        resetGame();
-        return;
-    }
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+  }
+
+  // Check if the game is a draw
+  if (moveCount === 9) {
+    gameStatus = "It's a draw!";
+    updateGameStatus();
+    return;
+  }
 }
 
-function checkForWin() {
-    const winningCombos = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
-    ];
-    return winningCombos.some(combo => {
-        return combo.every(index => {
-            return squares[index].textContent === currentPlayer;
-        });
-    });
-}
-
-function checkForTie() {
-    return Array.from(squares).every(square => {
-        return square.textContent !== '';
-    });
-}
-
-function resetGame() {
-    squares.forEach(square => {
-        square.classList.remove('x', 'o');
-        square.textContent = '';
-    });
-    currentPlayer = 'X';
+// Function to update the game status
+function updateGameStatus() {
+  const statusDiv = document.querySelector(".game-status");
+  statusDiv.textContent = gameStatus;
 }
