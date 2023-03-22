@@ -28,10 +28,16 @@
 
 .x {
     color: #0047ab;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .o {
     color: #ff2e2e;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
